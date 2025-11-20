@@ -1,0 +1,40 @@
+cmake_minimum_required(VERSION 3.25 FATAL_ERROR)
+
+project(Cpp_NumPy_Basic LANGUAGES CXX)
+
+set(PROGRAM_NAME test)
+
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF) 
+
+# Configure environment for using Numpy
+include(PythonEnvSetup.cmake)
+
+# pybind11 library
+find_package(pybind11 CONFIG REQUIRED)
+
+if (NOT pybind11_FOUND)
+    message(FATAL_ERROR "Library pybind11 not found! Check your installation!")
+endif()
+
+# C++ Executable
+include_directories(include)
+
+set(SOURCES
+    src/example.cpp
+    src/main.cpp
+)
+
+add_executable(${PROGRAM_NAME} ${SOURCES})
+
+target_include_directories(${PROGRAM_NAME}
+    PRIVATE
+        ${Python3_INCLUDE_DIRS}
+        ${NUMPY_INCLUDE_DIR}
+)
+
+target_link_libraries(${PROGRAM_NAME}
+    PRIVATE
+        Python3::Python
+)
