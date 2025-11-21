@@ -8,7 +8,7 @@
 
 namespace py = pybind11;
 
-auto Calc::normalize_minmax(const std::vector<double> &vec)
+auto Calc::normalize_minmax(const std::vector<double> &vec) const
     -> std::vector<double> {
   py::module np = py::module::import("numpy");
 
@@ -27,7 +27,8 @@ auto Calc::normalize_minmax(const std::vector<double> &vec)
 }
 
 auto Calc::detect_outliers_zscore(const std::vector<double> &vec,
-                                  double threshold) -> std::vector<double> {
+                                  double threshold) const
+    -> std::vector<double> {
   py::module np = py::module::import("numpy");
 
   py::array_t<double> arr(vec.size(), vec.data());
@@ -51,10 +52,10 @@ auto Calc::detect_outliers_zscore(const std::vector<double> &vec,
   return result;
 }
 
-auto Calc::analyse_vector(const std::vector<double> &vec, double threshold)
-    -> AnalysisResult {
+auto Calc::analyse_vector(const std::vector<double> &vec,
+                          double threshold) const -> AnalysisResult {
   AnalysisResult r;
-  r.normalizerd = normalize_minmax(vec);
+  r.normalized = normalize_minmax(vec);
   r.outliers = detect_outliers_zscore(vec, threshold);
   return r;
 }

@@ -2,6 +2,7 @@
 
 #include <pybind11/embed.h>
 
+#include <format>
 #include <print>
 
 namespace py = pybind11;
@@ -18,9 +19,19 @@ auto main() -> int {
   };
 
   try {
-    Calc calc;
+    const Calc calc;
     auto result = calc.analyse_vector(data, 1.4);
-    std::println("Normalized data: {}", result.normalizerd);
+    std::println("Original data: {}", data);
+
+    std::print("Normalized data: [");
+    for (std::size_t i = 0; i < result.normalized.size(); ++i) {
+      std::print("{:.3f}", result.normalized[i]);
+      if (i + 1 < result.normalized.size()) {
+        std::print(", ");
+      }
+    }
+    std::println("]");
+
     std::println("Outliers detected: {}", result.outliers);
   } catch (const std::exception &e) {
     std::println("Error: {}", e.what());
