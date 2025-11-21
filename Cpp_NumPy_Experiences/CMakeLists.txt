@@ -18,3 +18,4 @@ endif()
 
 # Examples
 add_subdirectory(Cpp_NumPy_Basic)
+add_subdirectory(Cpp_NumPy_Statistic)
