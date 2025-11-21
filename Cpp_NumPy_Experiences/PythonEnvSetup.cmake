@@ -76,6 +76,11 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
+# Export Python info to children projects
+set(Python3_INCLUDE_DIRS "${Python3_INCLUDE_DIRS}" CACHE INTERNAL "")
+set(Python3_LIBRARIES    "${Python3_LIBRARIES}"    CACHE INTERNAL "")
+
+# Export numpy include dir
 set(NUMPY_INCLUDE_DIR "${NUMPY_INCLUDE_DIR}" CACHE INTERNAL "NumPy include directory")
 
 message(STATUS "NumPy include dir: ${NUMPY_INCLUDE_DIR}")
